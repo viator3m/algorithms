@@ -7,4 +7,4 @@ def to_binary(n: int) -> str:
     return binary[::-1]
 
 
-print(to_binary(0))
+print(to_binary(int(input())))
