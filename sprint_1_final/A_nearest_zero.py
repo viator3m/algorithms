@@ -1,31 +1,35 @@
-from typing import List
+# id 69348708
+
+from typing import Tuple, List
 
 
-def read_input() -> List[int]:
-    _ = int(input())
+def read_input() -> Tuple[List[int], int]:
+    n = int(input())
     street = list(map(int, input().strip().split()))
-    return street
+    return street, n
 
 
-def get_nearest_zero(street: List[int]) -> str:
-    result = []
-    zero_index_list = {i for i in range(len(street)) if street[i] == 0}
-    for index in range(len(street)):
-        if street[index]:
-            min_distance = len(street)
-            for zero_index in zero_index_list:
-                distance = max(index, zero_index) - min(index, zero_index)
-                if distance < min_distance:
-                    min_distance = distance
-            result.append(min_distance)
-        else:
-            result.append(0)
+def get_nearest_zero(street: List[int], n: int) -> str:
+    result = [-1] * len(street)
+    zero_list = [i for i in range(n) if street[i] == 0]
+
+    for house in range(0, zero_list[0] + 1):
+        result[house] = zero_list[0] - house
+
+    for pos in range(len(zero_list) - 1):
+        zero_1, zero_2 = zero_list[pos], zero_list[pos + 1]
+        for house in range(zero_1, zero_2):
+            result[house] = min(house - zero_1, zero_2 - house)
+
+    for house in range(zero_list[-1], len(street)):
+        result[house] = house - zero_list[-1]
+
     return ' '.join(map(str, result))
 
 
 def main() -> None:
-    street = read_input()
-    print(get_nearest_zero(street))
+    street, n = read_input()
+    print(get_nearest_zero(street, n))
 
 
 if __name__ == '__main__':
