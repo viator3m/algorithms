@@ -1,4 +1,4 @@
-# id 69348708
+# id 69348867
 
 from typing import Tuple, List
 
@@ -10,7 +10,7 @@ def read_input() -> Tuple[List[int], int]:
 
 
 def get_nearest_zero(street: List[int], n: int) -> str:
-    result = [-1] * len(street)
+    result = [0] * len(street)
     zero_list = [i for i in range(n) if street[i] == 0]
 
     for house in range(0, zero_list[0] + 1):
