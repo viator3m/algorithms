@@ -6,6 +6,6 @@ def get_index_of_value(head, value):
     while node is not None:
         if node.value == value:
             return index
-        node = node.next_item
+        node = node.next
         index += 1
     return -1
