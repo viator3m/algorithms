@@ -10,19 +10,16 @@ class Numbers:
         self.items.append(item)
 
     def pop(self):
-        """Удаялет и возрващает последний элемент стека."""
+        """Удаляет и возвращает последний элемент стека."""
         return self.items.pop()
 
 
-def calc(sign: str) -> str:
-    """Возвращает строковое выражение в зависимости от оператора."""
-    signs = {
-        '+': 'num_1 + num_2',
-        '-': 'num_1 - num_2',
-        '*': 'num_1 * num_2',
-        '/': 'num_1 // num_2',
-    }
-    return f'{signs.get(sign)}'
+EXPRESSIONS = {
+    '+': 'num_1 + num_2',
+    '-': 'num_1 - num_2',
+    '*': 'num_1 * num_2',
+    '/': 'num_1 // num_2',
+}
 
 
 def main():
@@ -35,7 +32,7 @@ def main():
             numbers.push(int(symb))
         else:
             num_2, num_1 = numbers.pop(), numbers.pop()
-            temp = eval(calc(symb))
+            temp = eval(EXPRESSIONS[symb])
             numbers.push(temp)
 
     print(numbers.pop())
