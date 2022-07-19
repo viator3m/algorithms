@@ -1,4 +1,4 @@
-# id 69434809
+# id 69436333
 
 from typing import List, Optional
 
@@ -74,20 +74,15 @@ def main():
     comm = int(input())
     max_length = int(input())
     deque = Deque(max_length)
-    COMMANDS = {
-        'push_front': deque.push_front,
-        'push_back': deque.push_back,
-        'pop_front': deque.pop_front,
-        'pop_back': deque.pop_back,
-    }
 
     for command in range(comm):
         command, *value = input().split()
         if value:
-            COMMANDS[command](int(*value))
+            getattr(deque, command)(int(*value))
         else:
-            print(COMMANDS[command]())
+            print(getattr(deque, command)())
 
 
 if __name__ == '__main__':
     main()
+
