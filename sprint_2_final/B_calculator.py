@@ -1,4 +1,7 @@
-# id 69436187
+# id 69445617
+
+from operator import add, sub, mul, floordiv
+
 
 class Numbers:
     """Стек для хранения чисел."""
@@ -11,14 +14,15 @@ class Numbers:
 
     def pop(self):
         """Удаляет и возвращает последний элемент стека."""
-        return self.items.pop()
+        try:
+            return self.items.pop()
+        except IndexError:
+            return
 
 
 EXPRESSIONS = {
-    '+': 'num_1 + num_2',
-    '-': 'num_1 - num_2',
-    '*': 'num_1 * num_2',
-    '/': 'num_1 // num_2',
+    '+': add, '-': sub,
+    '*': mul, '/': floordiv,
 }
 
 
@@ -32,7 +36,7 @@ def main():
             numbers.push(int(symb))
         else:
             num_2, num_1 = numbers.pop(), numbers.pop()
-            temp = eval(EXPRESSIONS[symb])
+            temp = EXPRESSIONS[symb](num_1, num_2)
             numbers.push(temp)
 
     print(numbers.pop())
