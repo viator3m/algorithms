@@ -44,7 +44,7 @@ class Deque:
         else:
             raise OverFlowError('error')
 
-    def pop_front(self) -> int or str:
+    def pop_front(self) -> int:
         """Удаляет элемент из начала очереди и возвращает его."""
         if self.is_empty():
             raise EmptyDeque('error')
@@ -55,7 +55,7 @@ class Deque:
         self.__reset_deque__()
         return result
 
-    def pop_back(self) -> int or str:
+    def pop_back(self) -> int:
         """Удаляет элемент из конца очереди и возвращает его."""
         if self.is_empty():
             raise EmptyDeque('error')

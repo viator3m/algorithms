@@ -1,4 +1,4 @@
 def solution(node):
-    while node != None:
+    while node:
         print(node.value)
         node = node.next_item
