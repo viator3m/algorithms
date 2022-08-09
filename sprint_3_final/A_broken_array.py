@@ -27,7 +27,7 @@ def broken_search(nums: List[int], target: int) -> int:
     return -1
 
 
-def main():
+def main() -> None:
     """Основная логика программы."""
     _ = int(input())
     target = int(input())
