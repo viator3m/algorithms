@@ -1,15 +1,16 @@
-# id 69627436
+# id 69627880
 
 import random
+from dataclasses import dataclass
 from typing import List, Tuple
 
 
+@dataclass
 class Player:
     """Класс для представления участника соревнования."""
-    def __init__(self, name: str, solved: int, penalty: int):
-        self.name: str = name
-        self.solved: int = solved
-        self.penalty: int = penalty
+    name: str
+    solved: int
+    penalty: int
 
     def __lt__(self, other):
         if not isinstance(other, Player):
