@@ -1,30 +1,38 @@
-# id 69619774
+# id 69627436
 
 import random
-from typing import List, Dict, Tuple
+from typing import List, Tuple
 
 
-def first_is_winner(player1: Dict, player2: Dict) -> bool:
-    """Сравнивает двух участников соревнования.
-    Возвращает True, если первый участник выиграл у второго.
-    Иначе False."""
-    if player1['solved'] == player2['solved']:
-        if player1['penalty'] == player2['penalty']:
-            return player1['name'] < player2['name']
-        return player1['penalty'] < player2['penalty']
-    return player1['solved'] > player2['solved']
+class Player:
+    """Класс для представления участника соревнования."""
+    def __init__(self, name: str, solved: int, penalty: int):
+        self.name: str = name
+        self.solved: int = solved
+        self.penalty: int = penalty
+
+    def __lt__(self, other):
+        if not isinstance(other, Player):
+            raise TypeError(
+                f"Невозможно выполнить операцию сравнения между "
+                f"{self.__class__.__name__} и {other.__class__.__name__}")
+        return (-self.solved, self.penalty, self.name) < \
+               (-other.solved, other.penalty, other.name)
+
+    def __str__(self):
+        return self.name
 
 
-def partition(array: List[Dict], pivot: Dict, left: int, right: int)\
+def partition(array: List[Player], pivot: Player, left: int, right: int) \
         -> Tuple[int, int]:
     """Условно делит массив на две части относительно опорного элемента.
     Слева – элементы меньше. Справа – больше.
     Возвращает индексы конца левой и начала правой части.
     """
     while left <= right:
-        while first_is_winner(array[left], pivot):
+        while array[left] < pivot:
             left += 1
-        while first_is_winner(pivot, array[right]):
+        while pivot < array[right]:
             right -= 1
         if left <= right:
             array[left], array[right] = array[right], array[left]
@@ -33,7 +41,7 @@ def partition(array: List[Dict], pivot: Dict, left: int, right: int)\
     return left, right
 
 
-def quicksort(array: List[Dict], start: int = 0, end: int = None):
+def quicksort(array: List[Player], start: int = 0, end: int = None):
     """Быстрая сортировка in-place. Опорный элемент рандомный."""
     if end is None:
         end = len(array) - 1
@@ -47,16 +55,16 @@ def quicksort(array: List[Dict], start: int = 0, end: int = None):
     quicksort(array, left, end)
 
 
-def read_input() -> List[Dict]:
+def read_input() -> List[Player]:
     """Считывает входные данные из стандартного ввода.
-     Преобразует их в список словарей и возвращает его."""
+     Преобразует их в список участников и возвращает его."""
     lines = int(input())
     players = []
     for line in range(lines):
         input_data = input().split()
-        player = {'name': input_data[0],
-                  'solved': int(input_data[1]),
-                  'penalty': int(input_data[2])}
+        player = Player(input_data[0],
+                        int(input_data[1]),
+                        int(input_data[2]))
         players.append(player)
     return players
 
@@ -65,33 +73,33 @@ def main() -> None:
     """Основная логика программы."""
     players = read_input()
     quicksort(players)
-    [print(i['name']) for i in players]
+    [print(player) for player in players]
 
 
 def test1():
     players = [
-        {'name': 'za', 'solved': 0, 'penalty': 0},
-        {'name': 'b', 'solved': 0, 'penalty': 0}
+        Player('za', 0, 0),
+        Player('b', 0, 0)
     ]
     quicksort(players)
-    assert players[0]['name'] == 'b'
-    assert players[1]['name'] == 'za'
+    assert str(players[0]) == 'b'
+    assert str(players[1]) == 'za'
 
 
 def test2():
     players = [
-        {'name': 'alla', 'solved': 4, 'penalty': 100},
-        {'name': 'gena', 'solved': 6, 'penalty': 1000},
-        {'name': 'gosha', 'solved': 2, 'penalty': 90},
-        {'name': 'rita', 'solved': 2, 'penalty': 90},
-        {'name': 'timofey', 'solved': 4, 'penalty': 80}
+        Player('alla', 4, 100),
+        Player('gena', 6, 1000),
+        Player('gosha', 2, 90),
+        Player('rita', 2, 90),
+        Player('timofey', 4, 80),
     ]
     quicksort(players)
-    assert players[0]['name'] == 'gena'
-    assert players[1]['name'] == 'timofey'
-    assert players[2]['name'] == 'alla'
-    assert players[3]['name'] == 'gosha'
-    assert players[4]['name'] == 'rita'
+    assert str(players[0]) == 'gena'
+    assert str(players[1]) == 'timofey'
+    assert str(players[2]) == 'alla'
+    assert str(players[3]) == 'gosha'
+    assert str(players[4]) == 'rita'
 
 
 if __name__ == '__main__':
