@@ -1,4 +1,7 @@
-def get_block(array):
+from typing import List
+
+
+def get_block(array: List[int]) -> int:
     block = values = indexes = 0
     for i in range(len(array)):
         values += array[i]
