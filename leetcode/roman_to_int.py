@@ -13,7 +13,7 @@ def roman_to_int(s: str) -> int:
     return result
 
 
-class Test_Solution(TestCase):
+class TestSolution(TestCase):
     def test(self):
         assert roman_to_int('III') == 3
         assert roman_to_int('LVIII') == 58
